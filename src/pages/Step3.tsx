@@ -53,10 +53,10 @@ const fadeIn = keyframes`
 `;
 
 export default function Step3() {
-  const { setStep } = useMain();
+  const { goToStep } = useMain();
 
   const onClick = (val: string) => {
-    setStep(4)
+    goToStep(4)
   }
 
   return (

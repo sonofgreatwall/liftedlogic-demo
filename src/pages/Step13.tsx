@@ -3,7 +3,7 @@ import { Stack, Typography, Button, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
-import { StyledButton } from '../components'
+import { StyledButton, ErrorAlert } from '../components'
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -62,8 +62,9 @@ const buttonLists = [
 ]
 
 export default function Step13() {
-  const { setStep } = useMain();
+  const { goToStep } = useMain();
   const [selected, setSelected] = useState<number[]>([]);
+  const [error, setError] = useState<boolean>(false);
 
   const selectData = (val: number) => {
     setSelected(prev => {
@@ -78,7 +79,12 @@ export default function Step13() {
   }
 
   const gotoNext = () => {
-    setStep(14)
+    if (selected.length === 0) {
+      setError(true)
+    } else {
+      setError(false)
+      goToStep(14)
+    }
   }
 
   return (
@@ -90,6 +96,7 @@ export default function Step13() {
         mx={'auto'}
         sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
       >
+        {error && <ErrorAlert message='There was a problem with your submission. Please review the fields below.' />}
         <TextWrap>
           <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
             "*" indicates required fields
@@ -112,6 +119,7 @@ export default function Step13() {
             </DataButton>
           ))}
         </FormWrap>
+        {error && <Typography fontSize={14} lineHeight={1.5} color="error" mt={1.5} mb={2}>This field is required.</Typography>}
         <Stack mt={5} mb={12}>
           <StyledButton onClick={() => gotoNext()}>Next</StyledButton>
         </Stack>

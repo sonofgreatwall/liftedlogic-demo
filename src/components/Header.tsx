@@ -32,11 +32,7 @@ const BackButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Header() {
-  const { step, prevStep, setStep } = useMain();
-
-  const goBack = () => {
-    setStep(prevStep)
-  }
+  const { step, goBack } = useMain();
 
   return (
     <StyledHeaderWrap position="fixed">

@@ -1,7 +1,9 @@
-import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
+import { useState } from 'react';
+import { Stack, Typography, Button, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
+import { StyledButton, ErrorAlert } from '../components'
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -34,17 +36,18 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const DataButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
+const DataButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'selected',
+})<{ selected?: boolean }>(({ theme, selected }) => ({
+  backgroundColor: selected ? theme.palette.success.main : theme.palette.common.white,
+  color: selected ? theme.palette.common.white : theme.palette.secondary.main,
   padding: 16,
-  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
+  boxShadow: selected ? '0 6px 20px rgba(25, 118, 210, 0.4)' : '0 18px 46px rgba(0, 0, 0, 0.06)',
   textTransform: 'none',
-  color: theme.palette.secondary.main,
   fontSize: 20,
-  lineHeight: 1.4,
   fontWeight: 700,
   width: '100%',
-  marginBottom: 16
+  marginBottom: 16,
 }));
 
 // Pure fade-in animation
@@ -53,11 +56,34 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step15() {
-  const { setStep } = useMain();
+const buttonLists = [
+  "PPC or Digital Advertising", "Social Media", "SEO Blogging", "Email Marketing", "Video Asset Creation", "Lead Tracking", "Monitoring Analytics", "Monitoring My Online Reputation", "Print Materials", "Other"
+]
 
-  const onClick = (val: string) => {
-    setStep(15)
+export default function Step15() {
+  const { goToStep } = useMain();
+  const [selected, setSelected] = useState<number[]>([]);
+  const [error, setError] = useState<boolean>(false);
+
+  const selectData = (val: number) => {
+    setSelected(prev => {
+      if (prev.includes(val)) {
+        // Remove val
+        return prev.filter(i => i !== val);
+      } else {
+        // Add val
+        return [...prev, val];
+      }
+    });
+  }
+
+  const gotoNext = () => {
+    if (selected.length === 0) {
+      setError(true)
+    } else {
+      setError(false)
+      goToStep(16)
+    }
   }
 
   return (
@@ -69,35 +95,33 @@ export default function Step15() {
         mx={'auto'}
         sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
       >
+        {error && <ErrorAlert message='There was a problem with your submission. Please review the fields below.' />}
         <TextWrap>
           <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            How can we help?
+            What efforts would you like Lifted Logic to take over?
           </Typography>
           <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            What can we do to help your business grow?
+            Check all that apply.
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick('1')}>
-            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
-            Strategize and refine my current plan with minimal maintenance
-          </DataButton>
-          <DataButton onClick={() => onClick('2')}>
-            <Box component='img' src='./icons/checkmark-pink.webp' mr={1.5} />
-            Supplement my own team's marketing efforts
-          </DataButton>
-          <DataButton onClick={() => onClick('2')}>
-            <Box component='img' src='./icons/checkmark-yellow.webp' mr={1.5} />
-            Take over my marketing completely
-          </DataButton>
-          <DataButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
-            Not Sure
-          </DataButton>
+          {buttonLists.map((text, index) => (
+            <DataButton
+              key={index}
+              onClick={() => selectData(index)}
+              selected={selected.includes(index)}
+            >
+              {text}
+            </DataButton>
+          ))}
         </FormWrap>
+        {error && <Typography fontSize={14} lineHeight={1.5} color="error" mt={1.5} mb={2}>This field is required.</Typography>}
+        <Stack mt={5} mb={12}>
+          <StyledButton onClick={() => gotoNext()}>Next</StyledButton>
+        </Stack>
       </Stack>
     </PageLayout>
   );

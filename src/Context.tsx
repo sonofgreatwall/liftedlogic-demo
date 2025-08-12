@@ -4,8 +4,9 @@ import type { ReactNode } from "react";
 // Define the shape of your context data and actions
 interface MainContextType {
   step: number;
-  prevStep: number;
-  setStep: (val: number) => void;
+  goBack: () => void;
+  goToStep: (val: number) => void;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 // Create context with default empty values
@@ -19,15 +20,25 @@ interface MainProviderProps {
 // Provider component to wrap your app or subtree
 export const MainProvider = ({ children }: MainProviderProps) => {
   const [step, setStep] = useState<number>(1);
-  const [prevStep, setPrevStep] = useState<number>(1);
+  const [prevSteps, setPrevSteps] = useState<number[]>([]);
 
   const goToStep = (val: number) => {
-    setPrevStep(step)
-    setStep(val)
+    setPrevSteps(prev => [...prev, step]); // push current step to history
+    setStep(val);
+  };
+
+  const goBack = () => {
+    setPrevSteps(prev => {
+      if (prev.length === 0) return prev; // no history to go back to
+
+      const lastStep = prev[prev.length - 1]; // get last step
+      setStep(lastStep); // move to last step
+      return prev.slice(0, -1); // remove it from history
+    });
   }
 
   return (
-    <MainContext.Provider value={{ step, prevStep, setStep: goToStep }}>
+    <MainContext.Provider value={{ step, goBack, setStep, goToStep }}>
       {children}
     </MainContext.Provider>
   );

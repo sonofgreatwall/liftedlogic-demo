@@ -19,7 +19,7 @@ const ImageWrap = styled(Stack)({
 });
 
 export default function Step1() {
-  const { setStep } = useMain();
+  const { goToStep } = useMain();
 
   return (
     <PageLayout>
@@ -41,7 +41,7 @@ export default function Step1() {
             You can use this cost calculator to find out how much it will cost to get your project done.
           </Typography>
           <Box mt={5}>
-            <StyledButton onClick={() => setStep(2)} sx={{ width: 153 }}>Let's Go</StyledButton>
+            <StyledButton onClick={() => goToStep(2)} sx={{ width: 153 }}>Let's Go</StyledButton>
           </Box>
         </TextWrap>
         <ImageWrap>

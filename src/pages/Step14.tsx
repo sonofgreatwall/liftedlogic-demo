@@ -54,11 +54,7 @@ const fadeIn = keyframes`
 `;
 
 export default function Step14() {
-  const { setStep } = useMain();
-
-  const onClick = (val: string) => {
-    setStep(15)
-  }
+  const { goToStep } = useMain();
 
   return (
     <PageLayout>
@@ -81,19 +77,19 @@ export default function Step14() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick('1')}>
+          <DataButton onClick={() => goToStep(16)}>
             <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
             Strategize and refine my current plan with minimal maintenance
           </DataButton>
-          <DataButton onClick={() => onClick('2')}>
+          <DataButton onClick={() => goToStep(15)}>
             <Box component='img' src='./icons/checkmark-pink.webp' mr={1.5} />
             Supplement my own team's marketing efforts
           </DataButton>
-          <DataButton onClick={() => onClick('2')}>
+          <DataButton onClick={() => goToStep(15)}>
             <Box component='img' src='./icons/checkmark-yellow.webp' mr={1.5} />
             Take over my marketing completely
           </DataButton>
-          <DataButton onClick={() => onClick('3')}>
+          <DataButton onClick={() => goToStep(15)}>
             <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
             Not Sure
           </DataButton>
