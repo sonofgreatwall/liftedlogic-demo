@@ -41,7 +41,7 @@ export default function Footer() {
           sx={{ flexGrow: 1, height: 46 }}
           justifyContent={'space-between'}
         >
-          <ProgressBar value={20} />
+          <ProgressBar value={100 * (step - 1) / 18 } />
           <SaveButton disableRipple>Save My Progress</SaveButton>
         </Stack>
       </StyledContentWrap>

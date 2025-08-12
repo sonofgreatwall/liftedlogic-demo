@@ -20,6 +20,7 @@ const lightTheme = createTheme({
     mode: 'light',
     primary: { main: '#443e51' },
     secondary: { main: '#4c4c4c' },
+    info: {main: '#231e2e'},
     background: { default: '#f3f3ff', paper: '#f9f9ff' },
     success: { main: '#706cff' },
     text: {

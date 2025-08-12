@@ -1,53 +1,74 @@
-import { Stack, Box, Typography } from '@mui/material';
+import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
-import { StyledButton } from '../components'
+import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({
-  width: 460,
-  marginTop: 12
+  alignItems: 'center'
 });
 
-const ImageWrap = styled(Stack)({
-  width: 356,
-  height: 356,
-  overflow: 'hidden',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: 200
+const FormWrap = styled(Stack)({
+  marginTop: 80,
+  width: '100%',
+  flexDirection: 'row',
+  gap: 32
 });
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.common.white,
+  padding: 16,
+  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
+  textTransform: 'none',
+  color: theme.palette.secondary.main,
+  fontSize: 20,
+  fontWeight: 700,
+  width: '100%'
+}));
+
+// Pure fade-in animation
+const fadeIn = keyframes`
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+`;
 
 export default function Step2() {
+  const { setStep } = useMain();
+
+  const onClick = (val: string) => {
+    setStep(3)
+  }
+
   return (
     <PageLayout>
       <Stack
-        direction={'row'}
-        justifyContent={'space-between'}
+        direction={'column'}
+        alignItems={'center'}
         pt={12}
         mx={'auto'}
-        sx={{ maxWidth: 966 }}
+        sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
       >
         <TextWrap>
-          <Typography variant="h2" fontSize={62} fontWeight={700} lineHeight={'72px'} mb={4} color="primary">
-            Cost Calculator
+          <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
+            "*" indicates required fields
           </Typography>
-          <Typography component="p" fontSize={16} fontWeight={700} color="primary" mb={2.5}>
-            Whether you’ve been exploring our site and want to learn more, or you just want to get right down to it, you’ve come to the right place.
+          <Typography variant="h2" fontSize={40} fontWeight={700} lineHeight={'48px'} color="info">
+            What do you need?
           </Typography>
-          <Typography component="p" fontSize={16} color="secondary">
-            You can use this cost calculator to find out how much it will cost to get your project done.
-          </Typography>
-          <Box mt={5}>
-            <StyledButton sx={{ width: 153 }}>Let's Go</StyledButton>
-          </Box>
         </TextWrap>
-        <ImageWrap>
-          <Box
-            component={'img'}
-            src="./LL-5237-site-photos.jpg"
-            sx={{ width: '100%' }}
-          />
-        </ImageWrap>
+        <FormWrap>
+          <StyledButton onClick={() => onClick('1')}>
+            <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
+            New Website
+          </StyledButton>
+          <StyledButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
+            Ongoing Marketing
+          </StyledButton>
+          <StyledButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
+            Both
+          </StyledButton>
+        </FormWrap>
       </Stack>
     </PageLayout>
   );
