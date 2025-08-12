@@ -78,7 +78,7 @@ export default function Step13() {
   }
 
   const gotoNext = () => {
-    setStep(14)
+    setStep(18)
   }
 
   return (

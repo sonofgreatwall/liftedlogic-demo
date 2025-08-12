@@ -1,7 +1,6 @@
 import { Stack, Typography, FormControl, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
-import { useMain } from '../Context';
 import { StyledButton, BootstrapInput } from '../components'
 
 const TextWrap = styled(Stack)({
@@ -21,19 +20,20 @@ const FormWrap = styled(Stack)({
   justifyContent: 'center',
 });
 
+const StyledLabel = styled(Typography)(({ theme }) => ({
+  color: theme.palette.info.main,
+  fontSize: 20,
+  fontWeight: 700,
+  marginBottom: 8
+}));
+
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
   100% { opacity: 1; }
 `;
 
-export default function Step16() {
-  const { setStep } = useMain();
-
-  const onClick = (val: string) => {
-    setStep(17)
-  }
-
+export default function Step18() {
   return (
     <PageLayout>
       <Stack
@@ -48,29 +48,44 @@ export default function Step16() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What is the approximate lifetime value of a customer/client?
+            Let us know where to send your custom estimate.
           </Typography>
           <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            Knowing how much your customers are worth to you will help us determine the right budget to get you the ROI you're looking for.
+            We will never share or sell your information. Scout's honor.
           </Typography>
         </TextWrap>
         <FormWrap>
           <FormControl fullWidth>
-            <Typography variant="h2" fontSize={32} align='center' fontWeight={700} lineHeight={1.5} color="info" mb={3.5}>
-              Total Historical Revenue
-            </Typography>
-            <BootstrapInput placeholder='#' />
+            <StyledLabel>
+              Name*
+            </StyledLabel>
+            <Stack direction={'row'} gap={3.75}>
+              <BootstrapInput placeholder='Enter your first name' />
+              <BootstrapInput placeholder='Enter your last name' />
+            </Stack>
           </FormControl>
           <FormControl fullWidth>
-            <Typography variant="h2" fontSize={32} align='center' fontWeight={700} lineHeight={1.5} color="info" mb={3.5}>
-              Total # of Customers
-            </Typography>
-            <BootstrapInput placeholder='$' />
+            <StyledLabel>
+              Email*
+            </StyledLabel>
+            <BootstrapInput placeholder='Enter your email address' />
           </FormControl>
+          <FormControl fullWidth>
+            <StyledLabel>
+              Phone*
+            </StyledLabel>
+            <BootstrapInput placeholder='Enter your phone number' />
+          </FormControl>
+          <FormControl fullWidth>
+            <StyledLabel>
+              Current Website
+            </StyledLabel>
+            <BootstrapInput placeholder='https://' />
+          </FormControl>
+          <Stack mt={5} mb={12} width={'100%'} alignItems={'start'}>
+            <StyledButton>Submit</StyledButton>
+          </Stack>
         </FormWrap>
-        <Stack mt={5} mb={12}>
-          <StyledButton onClick={() => onClick('11')}>Next</StyledButton>
-        </Stack>
       </Stack>
     </PageLayout>
   );
