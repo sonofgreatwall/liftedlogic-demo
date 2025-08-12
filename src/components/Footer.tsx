@@ -18,7 +18,7 @@ const StyledContentWrap = styled(Container)({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
-  maxWidth: '1014px !important'
+  maxWidth: '1030px !important',
 });
 
 const SaveButton = styled(Button)(({ theme }) => ({
@@ -37,9 +37,9 @@ export default function Footer() {
     <StyledFooterWrap position="fixed">
       <StyledContentWrap>
         <Stack
-          spacing={2}
           sx={{ flexGrow: 1, height: 46 }}
           justifyContent={'space-between'}
+          px={2}
         >
           <ProgressBar value={100 * (step - 1) / 18 } />
           <SaveButton disableRipple>Save My Progress</SaveButton>

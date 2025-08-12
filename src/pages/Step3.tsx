@@ -52,11 +52,11 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step2() {
+export default function Step3() {
   const { setStep } = useMain();
 
   const onClick = (val: string) => {
-    setStep(3)
+    setStep(4)
   }
 
   return (
@@ -73,21 +73,24 @@ export default function Step2() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What do you need?
+            Will users log in?
+          </Typography>
+          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
+            Typically users will log in to save details, prefill online forms, access restricted areas, save shipping or payment info on e-commerce sites.
           </Typography>
         </TextWrap>
         <FormWrap>
           <StyledButton onClick={() => onClick('1')}>
-            <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
-            New Website
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Yes
           </StyledButton>
           <StyledButton onClick={() => onClick('2')}>
-            <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
-            Ongoing Marketing
+            <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
+            No
           </StyledButton>
           <StyledButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
-            Both
+            <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
+            Not Sure
           </StyledButton>
         </FormWrap>
       </Stack>

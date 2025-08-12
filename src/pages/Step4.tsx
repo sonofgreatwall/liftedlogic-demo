@@ -52,11 +52,11 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step2() {
+export default function Step4() {
   const { setStep } = useMain();
 
   const onClick = (val: string) => {
-    setStep(3)
+    setStep(5)
   }
 
   return (
@@ -73,21 +73,28 @@ export default function Step2() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What do you need?
+            How many pages will you need?
+          </Typography>
+          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
+            e.g., how it works, contact us, team, about, press, terms, FAQ, careers
           </Typography>
         </TextWrap>
         <FormWrap>
           <StyledButton onClick={() => onClick('1')}>
-            <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
-            New Website
+            <Box component='img' src='./icons/pages-indigo.webp' mr={1.5} />
+            1-3
           </StyledButton>
           <StyledButton onClick={() => onClick('2')}>
-            <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
-            Ongoing Marketing
+            <Box component='img' src='./icons/pages-pink.webp' mr={1.5} />
+            4-9
           </StyledButton>
           <StyledButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
-            Both
+            <Box component='img' src='./icons/pages-yellow.webp' mr={1.5} />
+            10+
+          </StyledButton>
+          <StyledButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
+            Not Sure
           </StyledButton>
         </FormWrap>
       </Stack>

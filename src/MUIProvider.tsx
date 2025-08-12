@@ -14,7 +14,7 @@ const ThemeModeContext = createContext<ThemeModeContextType | undefined>(undefin
 // Define light and dark themes
 const lightTheme = createTheme({
   typography: {
-    fontFamily: `'Inter Tight', sans-serif`,
+    fontFamily: `'Inter Tight'`,
   },
   palette: {
     mode: 'light',
@@ -36,7 +36,7 @@ const lightTheme = createTheme({
 
 const darkTheme = createTheme({
   typography: {
-    fontFamily: `'Inter Tight', sans-serif`,
+    fontFamily: `'Inter Tight', -apple-system, BlinkMacSystemFont, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji`,
   },
   palette: {
     mode: 'light',
