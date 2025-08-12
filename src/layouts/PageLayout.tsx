@@ -3,33 +3,28 @@ import {
   Header,
   Footer
 } from "../components"
-import { Stack, Box, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
 interface PageLayoutProps {
   children: ReactNode;
 }
 
-const StyledPageLayout = styled(Stack)({
-  height: '100vh',
-  justifyContent: 'space-between',
-});
-
 const StyledContentLayout = styled(Box)(({ theme }) => ({
-  height: '100%',
-  backgroundColor: theme.palette.background.paper
+  minHeight: 'calc(100vh - 54px)',
+  backgroundColor: theme.palette.background.paper,
 }));
 
 export function PageLayout({ children }: PageLayoutProps) {
   return (
-    <StyledPageLayout>
+    <>
       <Header />
       <StyledContentLayout>
-        <Container>
+        <Container sx={{ marginTop: '54px' }}>
           {children}
         </Container>
       </StyledContentLayout>
       <Footer />
-    </StyledPageLayout>
+    </>
   );
 }

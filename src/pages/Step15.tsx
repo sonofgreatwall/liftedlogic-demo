@@ -5,7 +5,7 @@ import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
-  maxWidth: 700
+  maxWidth: 750
 });
 
 const FormWrap = styled(Stack)(({ theme }) => ({
@@ -41,6 +41,7 @@ const DataButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   color: theme.palette.secondary.main,
   fontSize: 20,
+  lineHeight: 1.4,
   fontWeight: 700,
   width: '100%',
   marginBottom: 16
@@ -52,11 +53,11 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step2() {
+export default function Step14() {
   const { setStep } = useMain();
 
-  const onClick = (val: number) => {
-    setStep(val)
+  const onClick = (val: string) => {
+    setStep(16)
   }
 
   return (
@@ -73,21 +74,33 @@ export default function Step2() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What do you need?
+            How satisfied are you with your current marketing efforts?
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
-            New Website
+          <DataButton onClick={() => onClick('1')}>
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Total despise
           </DataButton>
-          <DataButton onClick={() => onClick(13)}>
-            <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
-            Ongoing Marketing
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/checkmark-pink.webp' mr={1.5} />
+            Occasionally loathe
           </DataButton>
-          <DataButton onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
-            Both
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/checkmark-yellow.webp' mr={1.5} />
+            Eh
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/checkmark-green.webp' mr={1.5} />
+            Pretty Okay
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/checkmark-blue.webp' mr={1.5} />
+            Satisified AF
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/not-sure-purple.webp' mr={1.5} />
+            I have no cule
           </DataButton>
         </FormWrap>
       </Stack>

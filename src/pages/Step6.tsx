@@ -34,7 +34,7 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
+const DataButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
   padding: 16,
   boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
@@ -80,26 +80,26 @@ export default function Step6() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <StyledButton onClick={() => onClick('1')}>
+          <DataButton onClick={() => onClick('1')}>
             <Box component='img' src='./icons/product-indigo.webp' mr={1.5} />
             Products
-          </StyledButton>
-          <StyledButton onClick={() => onClick('2')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('2')}>
             <Box component='img' src='./icons/invoice-pink.webp' mr={1.5} />
             Invoices
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
             <Box component='img' src='./icons/ticket-yellow.webp' mr={1.5} />
             Tickets / RSVPs
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
             <Box component='img' src='./icons/donation-green.webp' mr={1.5} />
             Donations
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
             <Box component='img' src='./icons/not-sure-blue.webp' mr={1.5} />
             Not Sure
-          </StyledButton>
+          </DataButton>
         </FormWrap>
       </Stack>
     </PageLayout>

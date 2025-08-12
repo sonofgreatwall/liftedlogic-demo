@@ -9,6 +9,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   borderRadius: 24,
   fontWeight: 'bold',
   textTransform: 'none',
+  minWidth: 153,
   '&:hover': {
     backgroundColor: theme.palette.success.main,
   },

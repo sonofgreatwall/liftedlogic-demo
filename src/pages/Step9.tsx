@@ -5,7 +5,7 @@ import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
-  maxWidth: 700
+  maxWidth: 750
 });
 
 const FormWrap = styled(Stack)(({ theme }) => ({
@@ -52,11 +52,11 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step2() {
+export default function Step9() {
   const { setStep } = useMain();
 
-  const onClick = (val: number) => {
-    setStep(val)
+  const onClick = (val: string) => {
+    setStep(10)
   }
 
   return (
@@ -73,21 +73,24 @@ export default function Step2() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What do you need?
+            How important is Search Engine Optimization (SEO)?
+          </Typography>
+          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
+            Building a site with a heavy focus on each engine optimization is best executed the earlier it is planned. SEO should never compromise a user’s experience.
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
-            New Website
+          <DataButton onClick={() => onClick('1')}>
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Very Important
           </DataButton>
-          <DataButton onClick={() => onClick(13)}>
-            <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
-            Ongoing Marketing
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
+            Not Important
           </DataButton>
-          <DataButton onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
-            Both
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
+            Not Sure
           </DataButton>
         </FormWrap>
       </Stack>

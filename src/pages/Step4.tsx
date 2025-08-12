@@ -34,7 +34,7 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
+const DataButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
   padding: 16,
   boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
@@ -80,22 +80,22 @@ export default function Step4() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <StyledButton onClick={() => onClick('1')}>
+          <DataButton onClick={() => onClick('1')}>
             <Box component='img' src='./icons/pages-indigo.webp' mr={1.5} />
             1-3
-          </StyledButton>
-          <StyledButton onClick={() => onClick('2')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('2')}>
             <Box component='img' src='./icons/pages-pink.webp' mr={1.5} />
             4-9
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
             <Box component='img' src='./icons/pages-yellow.webp' mr={1.5} />
             10+
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
             <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
             Not Sure
-          </StyledButton>
+          </DataButton>
         </FormWrap>
       </Stack>
     </PageLayout>

@@ -52,11 +52,11 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step2() {
+export default function Step11() {
   const { setStep } = useMain();
 
-  const onClick = (val: number) => {
-    setStep(val)
+  const onClick = (val: string) => {
+    setStep(12)
   }
 
   return (
@@ -73,21 +73,24 @@ export default function Step2() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What do you need?
+            Do you need professional web copywriting?
+          </Typography>
+          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
+            The saying “Content is King” couldn’t be more accurate. This doesn’t mean simply typing a bunch of keywords into a page. It’s showing the user you are an expert in your field.
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
-            New Website
+          <DataButton onClick={() => onClick('1')}>
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Yes
           </DataButton>
-          <DataButton onClick={() => onClick(13)}>
-            <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
-            Ongoing Marketing
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
+            No
           </DataButton>
-          <DataButton onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
-            Both
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
+            Not Sure
           </DataButton>
         </FormWrap>
       </Stack>

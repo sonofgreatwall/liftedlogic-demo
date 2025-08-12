@@ -1,7 +1,7 @@
 import { Stack, Box, Typography } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
-import { StyledButton } from '../components'
+import { StyledButton } from '../components';
 import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({

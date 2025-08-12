@@ -20,7 +20,7 @@ const StyledContentWrap = styled(Container)({
 
 export default function Header() {
   return (
-    <StyledHeaderWrap position="static">
+    <StyledHeaderWrap position="fixed">
       <StyledContentWrap>
         <Box
           component={'img'}

@@ -1,11 +1,13 @@
-import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
+import { useState } from 'react';
+import { Stack, Typography, Button, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
+import { StyledButton } from '../components'
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
-  maxWidth: 700
+  maxWidth: 750
 });
 
 const FormWrap = styled(Stack)(({ theme }) => ({
@@ -34,16 +36,19 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
+const DataButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'selected',
+})<{ selected?: boolean }>(({ theme, selected }) => ({
+  backgroundColor: selected ? theme.palette.success.main : theme.palette.common.white,
+  color: selected ? theme.palette.common.white : theme.palette.secondary.main,
   padding: 16,
-  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
+  height: 60,
+  boxShadow: selected ? '0 6px 20px rgba(25, 118, 210, 0.4)' : '0 18px 46px rgba(0, 0, 0, 0.06)',
   textTransform: 'none',
-  color: theme.palette.secondary.main,
   fontSize: 20,
   fontWeight: 700,
   width: '100%',
-  marginBottom: 16
+  marginBottom: 16,
 }));
 
 // Pure fade-in animation
@@ -52,11 +57,28 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step7() {
-  const { setStep } = useMain();
+const buttonLists = [
+  "Website", "PPC & Digital Advertising", "Social Media", "Print Materials", "Radio", "TV", "SEO Blogging", "Email", "Text", "Rewards Program", "Other", "None"
+]
 
-  const onClick = (val: string) => {
-    setStep(8)
+export default function Step13() {
+  const { setStep } = useMain();
+  const [selected, setSelected] = useState<number[]>([]);
+
+  const selectData = (val: number) => {
+    setSelected(prev => {
+      if (prev.includes(val)) {
+        // Remove val
+        return prev.filter(i => i !== val);
+      } else {
+        // Add val
+        return [...prev, val];
+      }
+    });
+  }
+
+  const gotoNext = () => {
+    setStep(14)
   }
 
   return (
@@ -73,26 +95,26 @@ export default function Step7() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            Does your website need to connect with an external app, website, or database?
+            What tools are you currently using as part of your marketing strategy?
           </Typography>
           <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            Does your site share data with another service (API, web service, product sync, google apps, shipping, internal records etc.)?
+            Check all that apply.
           </Typography>
         </TextWrap>
         <FormWrap>
-          <StyledButton onClick={() => onClick('1')}>
-            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
-            Yes
-          </StyledButton>
-          <StyledButton onClick={() => onClick('2')}>
-            <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
-            No
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
-            Not Sure
-          </StyledButton>
+          {buttonLists.map((text, index) => (
+            <DataButton
+              key={index}
+              onClick={() => selectData(index)}
+              selected={selected.includes(index)}
+            >
+              {text}
+            </DataButton>
+          ))}
         </FormWrap>
+        <Stack mt={5} mb={12}>
+          <StyledButton onClick={() => gotoNext()}>Next</StyledButton>
+        </Stack>
       </Stack>
     </PageLayout>
   );
