@@ -1,6 +1,6 @@
 import { Stack, Box, Typography } from '@mui/material';
 import { PageLayout } from '../layouts';
-import { styled } from '@mui/material/styles';
+import { styled, keyframes } from '@mui/material/styles';
 import { StyledButton } from '../components';
 import { useMain } from '../Context';
 
@@ -12,10 +12,32 @@ const TextWrap = styled(Stack)({
 const ImageWrap = styled(Stack)({
   width: 356,
   height: 356,
-  overflow: 'hidden',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: 200
+  position: 'relative'
+});
+
+// Define fade-in + slight slide-up animation
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const IconImage = styled('img')({
+  backgroundColor: 'white',
+  borderRadius: 12,
+  position: 'absolute',
+  opacity: 0,
+  animationFillMode: 'forwards',
+  animationTimingFunction: 'ease',
+  animationDuration: '0.6s',
+  animationName: fadeInUp,
 });
 
 export default function Step1() {
@@ -48,7 +70,19 @@ export default function Step1() {
           <Box
             component={'img'}
             src="./LL-5237-site-photos.jpg"
-            sx={{ width: '100%' }}
+            sx={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 200 }}
+          />
+          <IconImage
+            src="./homes/1.png"
+            sx={{ width: 52, top: 20, left: '5%' }}
+          />
+          <IconImage
+            src="./homes/2.png"
+            sx={{ width: 71, bottom: -10, left: '20%', animationDelay: '0.1s' }}
+          />
+          <IconImage
+            src="./homes/3.png"
+            sx={{ width: 91, top: '60%', right: -10, animationDelay: '0.2s' }}
           />
         </ImageWrap>
       </Stack>

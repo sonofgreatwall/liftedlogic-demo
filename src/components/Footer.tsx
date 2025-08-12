@@ -42,7 +42,7 @@ export default function Footer() {
           px={2}
         >
           <ProgressBar value={100 * (step - 1) / 18 } />
-          <SaveButton disableRipple>Save My Progress {step}</SaveButton>
+          <SaveButton disableRipple>Save My Progress</SaveButton>
         </Stack>
       </StyledContentWrap>
     </StyledFooterWrap>
