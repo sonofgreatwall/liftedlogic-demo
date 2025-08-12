@@ -4,7 +4,8 @@ import type { ReactNode } from "react";
 // Define the shape of your context data and actions
 interface MainContextType {
   step: number;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
+  prevStep: number;
+  setStep: (val: number) => void;
 }
 
 // Create context with default empty values
@@ -18,9 +19,15 @@ interface MainProviderProps {
 // Provider component to wrap your app or subtree
 export const MainProvider = ({ children }: MainProviderProps) => {
   const [step, setStep] = useState<number>(1);
+  const [prevStep, setPrevStep] = useState<number>(1);
+
+  const goToStep = (val: number) => {
+    setPrevStep(step)
+    setStep(val)
+  }
 
   return (
-    <MainContext.Provider value={{ step, setStep }}>
+    <MainContext.Provider value={{ step, prevStep, setStep: goToStep }}>
       {children}
     </MainContext.Provider>
   );

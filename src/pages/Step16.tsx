@@ -1,25 +1,51 @@
-import { Stack, Typography, FormControl, keyframes } from '@mui/material';
+import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
-import { StyledButton, BootstrapInput } from '../components'
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
   maxWidth: 750
 });
 
-const FormWrap = styled(Stack)({
-  marginTop: 40,
+const FormWrap = styled(Stack)(({ theme }) => ({
+  marginTop: 80,
   width: '100%',
-  maxWidth: 640,
-  padding: '0 40px',
   flexDirection: 'row',
-  gap: 40,
+  gap: 32,
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-});
+  '& > *': {
+    flex: '0 0 calc(33.333% - 21.33px)', // 3 per row, gap compensation (32 * 2 /3)
+    maxWidth: 'calc(33.333% - 21.33px)',
+  },
+  [theme.breakpoints.down('md')]: {
+    '& > *': {
+      flex: '0 0 calc(50% - 16px)', // 2 per row on smaller screen
+      maxWidth: 318,
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    '& > *': {
+      flex: '0 0 calc(100%)', // 2 per row on smaller screen
+      maxWidth: 560,
+    },
+  },
+}));
+
+const DataButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.common.white,
+  padding: 16,
+  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
+  textTransform: 'none',
+  color: theme.palette.secondary.main,
+  fontSize: 20,
+  lineHeight: 1.4,
+  fontWeight: 700,
+  width: '100%',
+  marginBottom: 16
+}));
 
 // Pure fade-in animation
 const fadeIn = keyframes`
@@ -48,29 +74,35 @@ export default function Step16() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            What is the approximate lifetime value of a customer/client?
-          </Typography>
-          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            Knowing how much your customers are worth to you will help us determine the right budget to get you the ROI you're looking for.
+            How satisfied are you with your current marketing efforts?
           </Typography>
         </TextWrap>
         <FormWrap>
-          <FormControl fullWidth>
-            <Typography variant="h2" fontSize={32} align='center' fontWeight={700} lineHeight={1.5} color="info" mb={3.5}>
-              Total Historical Revenue
-            </Typography>
-            <BootstrapInput placeholder='#' />
-          </FormControl>
-          <FormControl fullWidth>
-            <Typography variant="h2" fontSize={32} align='center' fontWeight={700} lineHeight={1.5} color="info" mb={3.5}>
-              Total # of Customers
-            </Typography>
-            <BootstrapInput placeholder='$' />
-          </FormControl>
+          <DataButton onClick={() => onClick('1')}>
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Total despise
+          </DataButton>
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/checkmark-pink.webp' mr={1.5} />
+            Occasionally loathe
+          </DataButton>
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/checkmark-yellow.webp' mr={1.5} />
+            Eh
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/checkmark-green.webp' mr={1.5} />
+            Pretty Okay
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/checkmark-blue.webp' mr={1.5} />
+            Satisified AF
+          </DataButton>
+          <DataButton onClick={() => onClick('3')}>
+            <Box component='img' src='./icons/not-sure-purple.webp' mr={1.5} />
+            I have no cule
+          </DataButton>
         </FormWrap>
-        <Stack mt={5} mb={12}>
-          <StyledButton onClick={() => onClick('11')}>Next</StyledButton>
-        </Stack>
       </Stack>
     </PageLayout>
   );

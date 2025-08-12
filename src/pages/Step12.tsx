@@ -56,7 +56,7 @@ export default function Step12() {
   const { setStep } = useMain();
 
   const onClick = (val: string) => {
-    setStep(13)
+    setStep(19)
   }
 
   return (

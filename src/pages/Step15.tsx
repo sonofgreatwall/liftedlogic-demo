@@ -53,11 +53,11 @@ const fadeIn = keyframes`
   100% { opacity: 1; }
 `;
 
-export default function Step14() {
+export default function Step15() {
   const { setStep } = useMain();
 
   const onClick = (val: string) => {
-    setStep(16)
+    setStep(15)
   }
 
   return (
@@ -74,33 +74,28 @@ export default function Step14() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            How satisfied are you with your current marketing efforts?
+            How can we help?
+          </Typography>
+          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
+            What can we do to help your business grow?
           </Typography>
         </TextWrap>
         <FormWrap>
           <DataButton onClick={() => onClick('1')}>
             <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
-            Total despise
+            Strategize and refine my current plan with minimal maintenance
           </DataButton>
           <DataButton onClick={() => onClick('2')}>
             <Box component='img' src='./icons/checkmark-pink.webp' mr={1.5} />
-            Occasionally loathe
+            Supplement my own team's marketing efforts
           </DataButton>
           <DataButton onClick={() => onClick('2')}>
             <Box component='img' src='./icons/checkmark-yellow.webp' mr={1.5} />
-            Eh
+            Take over my marketing completely
           </DataButton>
           <DataButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/checkmark-green.webp' mr={1.5} />
-            Pretty Okay
-          </DataButton>
-          <DataButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/checkmark-blue.webp' mr={1.5} />
-            Satisified AF
-          </DataButton>
-          <DataButton onClick={() => onClick('3')}>
-            <Box component='img' src='./icons/not-sure-purple.webp' mr={1.5} />
-            I have no cule
+            <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
+            Not Sure
           </DataButton>
         </FormWrap>
       </Stack>

@@ -16,7 +16,8 @@ import {
   Step15,
   Step16,
   Step17,
-  Step18
+  Step18,
+  Step19
 } from "./pages"
 import { useMain } from './Context';
 
@@ -43,6 +44,7 @@ export default function App() {
       {step === 16 && <Step16 />}
       {step === 17 && <Step17 />}
       {step === 18 && <Step18 />}
+      {step === 19 && <Step19 />}
     </>
   );
 }

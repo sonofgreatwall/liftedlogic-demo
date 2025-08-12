@@ -1,30 +1,50 @@
-import { Stack, Typography, FormControl, keyframes } from '@mui/material';
+import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
-import { StyledButton, BootstrapInput } from '../components'
+import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
   maxWidth: 750
 });
 
-const FormWrap = styled(Stack)({
-  marginTop: 40,
+const FormWrap = styled(Stack)(({ theme }) => ({
+  marginTop: 80,
   width: '100%',
-  maxWidth: 640,
-  padding: '0 40px',
   flexDirection: 'row',
-  gap: 40,
+  gap: 32,
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-});
+  '& > *': {
+    flex: '0 0 calc(33.333% - 21.33px)', // 3 per row, gap compensation (32 * 2 /3)
+    maxWidth: 'calc(33.333% - 21.33px)',
+  },
+  [theme.breakpoints.down('md')]: {
+    '& > *': {
+      flex: '0 0 calc(50% - 16px)', // 2 per row on smaller screen
+      maxWidth: 318,
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    '& > *': {
+      flex: '0 0 calc(100%)', // 2 per row on smaller screen
+      maxWidth: 560,
+    },
+  },
+}));
 
-const StyledLabel = styled(Typography)(({ theme }) => ({
-  color: theme.palette.info.main,
+const DataButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.common.white,
+  padding: 16,
+  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
+  textTransform: 'none',
+  color: theme.palette.secondary.main,
   fontSize: 20,
+  lineHeight: 1.4,
   fontWeight: 700,
-  marginBottom: 8
+  width: '100%',
+  marginBottom: 16
 }));
 
 // Pure fade-in animation
@@ -34,6 +54,12 @@ const fadeIn = keyframes`
 `;
 
 export default function Step18() {
+  const { setStep } = useMain();
+
+  const onClick = (val: string) => {
+    setStep(18)
+  }
+
   return (
     <PageLayout>
       <Stack
@@ -48,43 +74,18 @@ export default function Step18() {
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            Let us know where to send your custom estimate.
-          </Typography>
-          <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            We will never share or sell your information. Scout's honor.
+            Do you have any team members solely dedicated to marketing?
           </Typography>
         </TextWrap>
         <FormWrap>
-          <FormControl fullWidth>
-            <StyledLabel>
-              Name*
-            </StyledLabel>
-            <Stack direction={'row'} gap={3.75}>
-              <BootstrapInput placeholder='Enter your first name' />
-              <BootstrapInput placeholder='Enter your last name' />
-            </Stack>
-          </FormControl>
-          <FormControl fullWidth>
-            <StyledLabel>
-              Email*
-            </StyledLabel>
-            <BootstrapInput placeholder='Enter your email address' />
-          </FormControl>
-          <FormControl fullWidth>
-            <StyledLabel>
-              Phone*
-            </StyledLabel>
-            <BootstrapInput placeholder='Enter your phone number' />
-          </FormControl>
-          <FormControl fullWidth>
-            <StyledLabel>
-              Current Website
-            </StyledLabel>
-            <BootstrapInput placeholder='https://' />
-          </FormControl>
-          <Stack mt={5} mb={12} width={'100%'} alignItems={'start'}>
-            <StyledButton>Submit</StyledButton>
-          </Stack>
+          <DataButton onClick={() => onClick('1')}>
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Yes
+          </DataButton>
+          <DataButton onClick={() => onClick('2')}>
+            <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
+            No
+          </DataButton>
         </FormWrap>
       </Stack>
     </PageLayout>
