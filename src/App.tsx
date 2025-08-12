@@ -1,8 +1,13 @@
-import { Button, Typography, Container } from "@mui/material";
-import { Step1 } from "./pages"
+import { Step1, Step2 } from "./pages"
+import { useMain } from './Context';
 
 export default function App() {
+  const { step } = useMain();
+
   return (
-    <Step1 />
+    <>
+      {step === 1 && <Step1 />}
+      {step === 2 && <Step2 />}
+    </>
   );
 }

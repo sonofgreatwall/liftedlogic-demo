@@ -2,7 +2,6 @@ import { Stack, Box, Typography } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { StyledButton } from '../components'
-import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({
   width: 460,
@@ -18,9 +17,7 @@ const ImageWrap = styled(Stack)({
   borderRadius: 200
 });
 
-export default function Step1() {
-  const { setStep } = useMain();
-
+export default function Step2() {
   return (
     <PageLayout>
       <Stack
@@ -41,7 +38,7 @@ export default function Step1() {
             You can use this cost calculator to find out how much it will cost to get your project done.
           </Typography>
           <Box mt={5}>
-            <StyledButton onClick={() => setStep(2)} sx={{ width: 153 }}>Let's Go</StyledButton>
+            <StyledButton sx={{ width: 153 }}>Let's Go</StyledButton>
           </Box>
         </TextWrap>
         <ImageWrap>

@@ -7,6 +7,7 @@ const StyledHeaderWrap = styled(AppBar)({
   height: 54,
   backgroundColor: 'white',
   justifyContent: 'center',
+  zIndex: 1,
   boxShadow: '0 4px 4px rgba(0,0,0,.103557)'
 });
 
