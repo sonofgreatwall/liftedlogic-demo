@@ -43,7 +43,7 @@ const fadeIn = keyframes`
 `;
 
 export default function Step19() {
-  const { goToStep } = useMain();
+  const { goToStep, data } = useMain();
   const [error, setError] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -112,11 +112,31 @@ export default function Step19() {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      // Form is valid, proceed with submission
-      console.log('Form submitted:', formData);
       setError(false);
-      // Add your submission logic here
-      goToStep(100)
+      delete data.saveEmail;
+      fetch('http://localhost:5000/save_result', {
+        method: 'POST', // HTTP method
+        headers: {
+          'Content-Type': 'application/json' // tell server we're sending JSON
+        },
+        body: JSON.stringify({
+          ...formData,
+          data
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          goToStep(100)
+          console.log('Server response:', data);
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+        });
     } else {
       setError(true);
     }
@@ -144,37 +164,37 @@ export default function Step19() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <FormControl fullWidth>
+          <Stack width="100%">
             <StyledLabel>
               Name*
             </StyledLabel>
-            <Stack direction={'row'} gap={3.75}>
-              <Stack width="100%">
-                <BootstrapInput 
-                  placeholder='Enter your first name' 
+            <Stack direction={'row'} width="100%" gap={3.75}>
+              <FormControl fullWidth>
+                <BootstrapInput
+                  placeholder='Enter your first name'
                   value={formData.firstName}
                   onChange={(e) => handleInputChange('firstName', e.target.value)}
                   error={!!errors.firstName}
                 />
                 {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
-              </Stack>
-              <Stack width="100%">
-                <BootstrapInput 
-                  placeholder='Enter your last name' 
+              </FormControl>
+              <FormControl fullWidth>
+                <BootstrapInput
+                  placeholder='Enter your last name'
                   value={formData.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
                   error={!!errors.lastName}
                 />
                 {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
-              </Stack>
+              </FormControl>
             </Stack>
-          </FormControl>
+          </Stack>
           <FormControl fullWidth>
             <StyledLabel>
               Email*
             </StyledLabel>
-            <BootstrapInput 
-              placeholder='Enter your email address' 
+            <BootstrapInput
+              placeholder='Enter your email address'
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               error={!!errors.email}
@@ -185,8 +205,8 @@ export default function Step19() {
             <StyledLabel>
               Phone*
             </StyledLabel>
-            <BootstrapInput 
-              placeholder='Enter your phone number' 
+            <BootstrapInput
+              placeholder='Enter your phone number'
               value={formData.phone}
               onChange={(e) => handleInputChange('phone', e.target.value)}
               error={!!errors.phone}
@@ -197,8 +217,8 @@ export default function Step19() {
             <StyledLabel>
               Current Website
             </StyledLabel>
-            <BootstrapInput 
-              placeholder='https://' 
+            <BootstrapInput
+              placeholder='https://'
               value={formData.website}
               onChange={(e) => handleInputChange('website', e.target.value)}
             />

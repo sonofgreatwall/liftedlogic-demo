@@ -40,9 +40,10 @@ export default function App() {
           return response.json();
         })
         .then(data => {
-          updateData(data)
           setStep(data.prevSteps[data.prevSteps.length - 1])
           setPrevSteps(data.prevSteps.slice(0, -1) || [])
+          delete data.prevSteps;
+          updateData({ ...data, token: gfToken })
           console.log('Server response:', data);
         })
         .catch(error => {
