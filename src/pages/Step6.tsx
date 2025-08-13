@@ -1,7 +1,9 @@
-import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
+import { useState } from 'react';
+import { Stack, Box, Typography, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
+import { DataButton } from '../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -34,18 +36,6 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const DataButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-  padding: 16,
-  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
-  textTransform: 'none',
-  color: theme.palette.secondary.main,
-  fontSize: 20,
-  fontWeight: 700,
-  width: '100%',
-  marginBottom: 16
-}));
-
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -53,9 +43,12 @@ const fadeIn = keyframes`
 `;
 
 export default function Step6() {
-  const { goToStep } = useMain();
+  const { goToStep, updateData, data } = useMain();
+  const [selected, setSelected] = useState<number>(data.step6);
 
-  const onClick = (val: string) => {
+  const onClick = (val: number) => {
+    setSelected(val)
+    updateData({ step6: val })
     goToStep(7)
   }
 
@@ -80,23 +73,23 @@ export default function Step6() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick('1')}>
+          <DataButton selected={selected === 1} onClick={() => onClick(1)}>
             <Box component='img' src='./icons/product-indigo.webp' mr={1.5} />
             Products
           </DataButton>
-          <DataButton onClick={() => onClick('2')}>
+          <DataButton selected={selected === 2} onClick={() => onClick(2)}>
             <Box component='img' src='./icons/invoice-pink.webp' mr={1.5} />
             Invoices
           </DataButton>
-          <DataButton onClick={() => onClick('3')}>
+          <DataButton selected={selected === 3} onClick={() => onClick(3)}>
             <Box component='img' src='./icons/ticket-yellow.webp' mr={1.5} />
             Tickets / RSVPs
           </DataButton>
-          <DataButton onClick={() => onClick('3')}>
+          <DataButton selected={selected === 4} onClick={() => onClick(4)}>
             <Box component='img' src='./icons/donation-green.webp' mr={1.5} />
             Donations
           </DataButton>
-          <DataButton onClick={() => onClick('3')}>
+          <DataButton selected={selected === 5} onClick={() => onClick(5)}>
             <Box component='img' src='./icons/not-sure-blue.webp' mr={1.5} />
             Not Sure
           </DataButton>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Stack, Typography, FormControl, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
@@ -28,9 +29,12 @@ const fadeIn = keyframes`
 `;
 
 export default function Step17() {
-  const { goToStep } = useMain();
+  const { goToStep, updateData, data } = useMain();
+  const [revenue, setRevenue] = useState(data?.step17?.revenue || 0);
+  const [customers, setCustomers] = useState(data?.step17?.customers || "");
 
-  const onClick = (val: string) => {
+  const onClick = () => {
+    updateData({ step17: { revenue, customers } })
     goToStep(18)
   }
 
@@ -59,17 +63,17 @@ export default function Step17() {
             <Typography variant="h2" fontSize={32} align='center' fontWeight={700} lineHeight={1.5} color="info" mb={3.5}>
               Total Historical Revenue
             </Typography>
-            <BootstrapInput placeholder='#' />
+            <BootstrapInput placeholder='#' value={revenue} onChange={e => setRevenue(Number(e.target.value))} />
           </FormControl>
           <FormControl fullWidth>
             <Typography variant="h2" fontSize={32} align='center' fontWeight={700} lineHeight={1.5} color="info" mb={3.5}>
               Total # of Customers
             </Typography>
-            <BootstrapInput placeholder='$' />
+            <BootstrapInput placeholder='$' value={customers} onChange={e => setCustomers(e.target.value)} />
           </FormControl>
         </FormWrap>
         <Stack mt={5} mb={12}>
-          <StyledButton onClick={() => onClick('11')}>Next</StyledButton>
+          <StyledButton onClick={onClick}>Next</StyledButton>
         </Stack>
       </Stack>
     </PageLayout>

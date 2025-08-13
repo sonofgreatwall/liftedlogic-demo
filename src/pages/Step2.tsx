@@ -1,7 +1,9 @@
-import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
+import { useState } from 'react';
+import { Stack, Box, Typography, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
+import { DataButton } from '../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -34,18 +36,6 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const DataButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-  padding: 16,
-  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
-  textTransform: 'none',
-  color: theme.palette.secondary.main,
-  fontSize: 20,
-  fontWeight: 700,
-  width: '100%',
-  marginBottom: 16
-}));
-
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -53,10 +43,16 @@ const fadeIn = keyframes`
 `;
 
 export default function Step2() {
-  const { goToStep } = useMain();
+  const { goToStep, updateData, data } = useMain();
+  const [selected, setSelected] = useState<number>(data.step2);
 
   const onClick = (val: number) => {
-    goToStep(val)
+    setSelected(val)
+    updateData({ step2: val })
+    if (val === 2)
+      goToStep(13)
+    else
+      goToStep(3)
   }
 
   return (
@@ -77,15 +73,15 @@ export default function Step2() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => onClick(3)}>
+          <DataButton selected={selected === 1} onClick={() => onClick(1)}>
             <Box component='img' src='./icons/Website-indigo-icon2.webp' mr={1.5} />
             New Website
           </DataButton>
-          <DataButton onClick={() => onClick(13)}>
+          <DataButton selected={selected === 2} onClick={() => onClick(2)}>
             <Box component='img' src='./icons/Marketing-pink-icon.webp' mr={1.5} />
             Ongoing Marketing
           </DataButton>
-          <DataButton onClick={() => onClick(3)}>
+          <DataButton selected={selected === 3} onClick={() => onClick(3)}>
             <Box component='img' src='./icons/Both-yellow-icon.webp' mr={1.5} />
             Both
           </DataButton>

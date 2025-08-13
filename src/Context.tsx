@@ -3,10 +3,12 @@ import type { ReactNode } from "react";
 
 // Define the shape of your context data and actions
 interface MainContextType {
+  data: any;
   step: number;
   goBack: () => void;
   goToStep: (val: number) => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  updateData: (val: any) => void;
 }
 
 // Create context with default empty values
@@ -20,6 +22,7 @@ interface MainProviderProps {
 // Provider component to wrap your app or subtree
 export const MainProvider = ({ children }: MainProviderProps) => {
   const [step, setStep] = useState<number>(1);
+  const [data, setData] = useState({});
   const [prevSteps, setPrevSteps] = useState<number[]>([]);
 
   const goToStep = (val: number) => {
@@ -37,8 +40,15 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     });
   }
 
+  const updateData = (val: any) => {
+    setData({
+      ...data,
+      ...val
+    })
+  }
+
   return (
-    <MainContext.Provider value={{ step, goBack, setStep, goToStep }}>
+    <MainContext.Provider value={{ step, goBack, setStep, goToStep, updateData, data }}>
       {children}
     </MainContext.Provider>
   );

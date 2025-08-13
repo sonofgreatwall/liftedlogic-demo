@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Stack, Typography, Button, keyframes } from '@mui/material';
+import { Stack, Typography, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
-import { StyledButton, ErrorAlert } from '../components'
+import { StyledButton, DataButton, ErrorAlert } from '../components'
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -36,21 +36,6 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const DataButton = styled(Button, {
-  shouldForwardProp: (prop) => prop !== 'selected',
-})<{ selected?: boolean }>(({ theme, selected }) => ({
-  backgroundColor: selected ? theme.palette.success.main : theme.palette.common.white,
-  color: selected ? theme.palette.common.white : theme.palette.secondary.main,
-  padding: 16,
-  height: 60,
-  boxShadow: selected ? '0 6px 20px rgba(25, 118, 210, 0.4)' : '0 18px 46px rgba(0, 0, 0, 0.06)',
-  textTransform: 'none',
-  fontSize: 20,
-  fontWeight: 700,
-  width: '100%',
-  marginBottom: 16,
-}));
-
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -62,8 +47,8 @@ const buttonLists = [
 ]
 
 export default function Step13() {
-  const { goToStep } = useMain();
-  const [selected, setSelected] = useState<number[]>([]);
+  const { goToStep, updateData, data } = useMain();
+  const [selected, setSelected] = useState<number[]>(data.step13 || []);
   const [error, setError] = useState<boolean>(false);
 
   const selectData = (val: number) => {
@@ -82,6 +67,7 @@ export default function Step13() {
     if (selected.length === 0) {
       setError(true)
     } else {
+      updateData({ step13: selected })
       setError(false)
       goToStep(14)
     }

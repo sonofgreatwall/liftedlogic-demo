@@ -1,7 +1,9 @@
-import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
+import { useState } from 'react';
+import { Stack, Box, Typography, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
+import { DataButton } from '../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -34,18 +36,6 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-  padding: 16,
-  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
-  textTransform: 'none',
-  color: theme.palette.secondary.main,
-  fontSize: 20,
-  fontWeight: 700,
-  width: '100%',
-  marginBottom: 16
-}));
-
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -53,9 +43,12 @@ const fadeIn = keyframes`
 `;
 
 export default function Step7() {
-  const { goToStep } = useMain();
+  const { goToStep, updateData, data } = useMain();
+  const [selected, setSelected] = useState<number>(data.step7);
 
-  const onClick = (val: string) => {
+  const onClick = (val: number) => {
+    setSelected(val)
+    updateData({ step7: val })
     goToStep(8)
   }
 
@@ -80,18 +73,18 @@ export default function Step7() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <StyledButton onClick={() => onClick('1')}>
+          <DataButton selected={selected === 1} onClick={() => onClick(1)}>
             <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
             Yes
-          </StyledButton>
-          <StyledButton onClick={() => onClick('2')}>
+          </DataButton>
+          <DataButton selected={selected === 2} onClick={() => onClick(2)}>
             <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
             No
-          </StyledButton>
-          <StyledButton onClick={() => onClick('3')}>
+          </DataButton>
+          <DataButton selected={selected === 3} onClick={() => onClick(3)}>
             <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
             Not Sure
-          </StyledButton>
+          </DataButton>
         </FormWrap>
       </Stack>
     </PageLayout>

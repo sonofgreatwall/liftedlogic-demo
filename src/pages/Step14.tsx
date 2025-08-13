@@ -1,7 +1,9 @@
-import { Stack, Box, Typography, Button, keyframes } from '@mui/material';
+import { useState } from 'react';
+import { Stack, Box, Typography, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
 import { useMain } from '../Context';
+import { DataButton } from '../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -34,19 +36,6 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const DataButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-  padding: 16,
-  boxShadow: '0 18px 46px rgba(0, 0, 0, .06)',
-  textTransform: 'none',
-  color: theme.palette.secondary.main,
-  fontSize: 20,
-  lineHeight: 1.4,
-  fontWeight: 700,
-  width: '100%',
-  marginBottom: 16
-}));
-
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -54,7 +43,17 @@ const fadeIn = keyframes`
 `;
 
 export default function Step14() {
-  const { goToStep } = useMain();
+  const { goToStep, updateData, data } = useMain();
+  const [selected, setSelected] = useState<number>(data.step14);
+
+  const onClick = (val: number) => {
+    setSelected(val)
+    updateData({ step14: val })
+    if (val === 1)
+      goToStep(16)
+    else
+      goToStep(15)
+  }
 
   return (
     <PageLayout>
@@ -77,19 +76,19 @@ export default function Step14() {
           </Typography>
         </TextWrap>
         <FormWrap>
-          <DataButton onClick={() => goToStep(16)}>
+          <DataButton selected={selected === 1} onClick={() => onClick(1)}>
             <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
             Strategize and refine my current plan with minimal maintenance
           </DataButton>
-          <DataButton onClick={() => goToStep(15)}>
+          <DataButton selected={selected === 2} onClick={() => onClick(2)}>
             <Box component='img' src='./icons/checkmark-pink.webp' mr={1.5} />
             Supplement my own team's marketing efforts
           </DataButton>
-          <DataButton onClick={() => goToStep(15)}>
+          <DataButton selected={selected === 3} onClick={() => onClick(3)}>
             <Box component='img' src='./icons/checkmark-yellow.webp' mr={1.5} />
             Take over my marketing completely
           </DataButton>
-          <DataButton onClick={() => goToStep(15)}>
+          <DataButton selected={selected === 4} onClick={() => onClick(4)}>
             <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
             Not Sure
           </DataButton>
