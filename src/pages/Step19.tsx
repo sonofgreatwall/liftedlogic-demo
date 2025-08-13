@@ -59,6 +59,83 @@ export default function Step19() {
     phone: ''
   });
 
+  // Phone number validation function
+  const isValidPhoneNumber = (phone: string): boolean => {
+    // Remove all non-digit characters for validation
+    const digitsOnly = phone.replace(/\D/g, '');
+    
+    // Check if it's a valid length (7-15 digits is standard)
+    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+      return false;
+    }
+    
+    // Check if it starts with a valid country code or area code
+    // US numbers typically start with 1, other countries have various codes
+    if (digitsOnly.length === 11 && digitsOnly[0] === '1') {
+      return true; // US number with country code
+    }
+    
+    if (digitsOnly.length === 10) {
+      return true; // US number without country code
+    }
+    
+    // Allow international numbers (7-15 digits)
+    if (digitsOnly.length >= 7 && digitsOnly.length <= 15) {
+      return true;
+    }
+    
+    return false;
+  };
+
+  // Function to format phone number as user types with dashes
+  const formatPhoneNumber = (value: string): string => {
+    // Only allow digits, +, -, (, ), and spaces
+    let cleaned = value.replace(/[^\d\s\+\-\(\)]/g, '');
+    
+    // Remove all non-digit characters for length checking
+    const digitsOnly = cleaned.replace(/\D/g, '');
+    
+    // Limit to maximum 15 digits (international standard)
+    if (digitsOnly.length > 15) {
+      return value;
+    }
+    
+    // Format with dashes for US numbers (10 digits)
+    if (digitsOnly.length <= 10) {
+      if (digitsOnly.length <= 3) {
+        return digitsOnly;
+      } else if (digitsOnly.length <= 6) {
+        return `${digitsOnly.slice(0, 3)}-${digitsOnly.slice(3)}`;
+      } else {
+        return `${digitsOnly.slice(0, 3)}-${digitsOnly.slice(3, 6)}-${digitsOnly.slice(6)}`;
+      }
+    }
+    
+    // For longer numbers (international), add dashes every 3-4 digits
+    if (digitsOnly.length <= 12) {
+      if (digitsOnly.length <= 4) {
+        return digitsOnly;
+      } else if (digitsOnly.length <= 8) {
+        return `${digitsOnly.slice(0, 4)}-${digitsOnly.slice(4)}`;
+      } else {
+        return `${digitsOnly.slice(0, 4)}-${digitsOnly.slice(4, 8)}-${digitsOnly.slice(8)}`;
+      }
+    } else {
+      // For very long numbers (13-15 digits)
+      if (digitsOnly.length <= 15) {
+        if (digitsOnly.length <= 5) {
+          return digitsOnly;
+        } else if (digitsOnly.length <= 10) {
+          return `${digitsOnly.slice(0, 5)}-${digitsOnly.slice(5)}`;
+        } else {
+          return `${digitsOnly.slice(0, 5)}-${digitsOnly.slice(5, 10)}-${digitsOnly.slice(10)}`;
+        }
+      }
+    }
+    
+    return cleaned;
+  };
+
   const validateForm = () => {
     const newErrors = {
       firstName: '',
@@ -87,8 +164,8 @@ export default function Step19() {
     // Validate phone
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
-    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-\(\)]/g, ''))) {
-      newErrors.phone = 'Please enter a valid phone number';
+    } else if (!isValidPhoneNumber(formData.phone)) {
+      newErrors.phone = 'Please enter a valid phone number (7-15 digits)';
     }
 
     setErrors(newErrors);
@@ -96,9 +173,16 @@ export default function Step19() {
   };
 
   const handleInputChange = (field: string, value: string) => {
+    let processedValue = value;
+    
+    // Special handling for phone field
+    if (field === 'phone') {
+      processedValue = formatPhoneNumber(value);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: processedValue
     }));
 
     // Clear error when user starts typing
@@ -210,6 +294,9 @@ export default function Step19() {
               value={formData.phone}
               onChange={(e) => handleInputChange('phone', e.target.value)}
               error={!!errors.phone}
+              inputProps={{
+                maxLength: 20 // Allow for formatting characters
+              }}
             />
             {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
           </FormControl>
