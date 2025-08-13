@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Stack, Typography, FormControl, keyframes } from '@mui/material';
 import { PageLayout } from '../layouts';
 import { styled } from '@mui/material/styles';
-import { StyledButton, BootstrapInput } from '../components'
+import { StyledButton, BootstrapInput, ErrorAlert } from '../components'
+import { useMain } from '../Context';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
@@ -27,6 +29,13 @@ const StyledLabel = styled(Typography)(({ theme }) => ({
   marginBottom: 8
 }));
 
+const ErrorMessage = styled(Typography)(({ theme }) => ({
+  color: '#d32f2f',
+  fontSize: 14,
+  marginTop: 4,
+  marginLeft: 4
+}));
+
 // Pure fade-in animation
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -34,6 +43,85 @@ const fadeIn = keyframes`
 `;
 
 export default function Step19() {
+  const { goToStep } = useMain();
+  const [error, setError] = useState<boolean>(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    website: ''
+  });
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  });
+
+  const validateForm = () => {
+    const newErrors = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: ''
+    };
+
+    // Validate first name
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+
+    // Validate last name
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+
+    // Validate email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Validate phone
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-\(\)]/g, ''))) {
+      newErrors.phone = 'Please enter a valid phone number';
+    }
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(error => error !== '');
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+
+    // Clear error when user starts typing
+    if (errors[field as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      // Form is valid, proceed with submission
+      console.log('Form submitted:', formData);
+      setError(false);
+      // Add your submission logic here
+      goToStep(100)
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <PageLayout>
       <Stack
@@ -43,6 +131,7 @@ export default function Step19() {
         mx={'auto'}
         sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
       >
+        {error && <ErrorAlert message='There was a problem with your submission. Please review the fields below.' />}
         <TextWrap>
           <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
             "*" indicates required fields
@@ -60,30 +149,62 @@ export default function Step19() {
               Name*
             </StyledLabel>
             <Stack direction={'row'} gap={3.75}>
-              <BootstrapInput placeholder='Enter your first name' />
-              <BootstrapInput placeholder='Enter your last name' />
+              <Stack width="100%">
+                <BootstrapInput 
+                  placeholder='Enter your first name' 
+                  value={formData.firstName}
+                  onChange={(e) => handleInputChange('firstName', e.target.value)}
+                  error={!!errors.firstName}
+                />
+                {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
+              </Stack>
+              <Stack width="100%">
+                <BootstrapInput 
+                  placeholder='Enter your last name' 
+                  value={formData.lastName}
+                  onChange={(e) => handleInputChange('lastName', e.target.value)}
+                  error={!!errors.lastName}
+                />
+                {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
+              </Stack>
             </Stack>
           </FormControl>
           <FormControl fullWidth>
             <StyledLabel>
               Email*
             </StyledLabel>
-            <BootstrapInput placeholder='Enter your email address' />
+            <BootstrapInput 
+              placeholder='Enter your email address' 
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              error={!!errors.email}
+            />
+            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
           </FormControl>
           <FormControl fullWidth>
             <StyledLabel>
               Phone*
             </StyledLabel>
-            <BootstrapInput placeholder='Enter your phone number' />
+            <BootstrapInput 
+              placeholder='Enter your phone number' 
+              value={formData.phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              error={!!errors.phone}
+            />
+            {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
           </FormControl>
           <FormControl fullWidth>
             <StyledLabel>
               Current Website
             </StyledLabel>
-            <BootstrapInput placeholder='https://' />
+            <BootstrapInput 
+              placeholder='https://' 
+              value={formData.website}
+              onChange={(e) => handleInputChange('website', e.target.value)}
+            />
           </FormControl>
           <Stack mt={5} mb={12} width={'100%'} alignItems={'start'}>
-            <StyledButton>Submit</StyledButton>
+            <StyledButton onClick={handleSubmit}>Submit</StyledButton>
           </Stack>
         </FormWrap>
       </Stack>

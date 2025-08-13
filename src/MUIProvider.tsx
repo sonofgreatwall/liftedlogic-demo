@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 import type { ReactNode } from "react";
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
@@ -20,7 +20,7 @@ const lightTheme = createTheme({
     mode: 'light',
     primary: { main: '#443e51' },
     secondary: { main: '#4c4c4c' },
-    info: {main: '#231e2e'},
+    info: { main: '#231e2e' },
     background: { default: '#f3f3ff', paper: '#f9f9ff' },
     success: { main: '#706cff' },
     text: {
@@ -34,55 +34,17 @@ const lightTheme = createTheme({
   },
 });
 
-const darkTheme = createTheme({
-  typography: {
-    fontFamily: `'Inter Tight', -apple-system, BlinkMacSystemFont, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji`,
-  },
-  palette: {
-    mode: 'light',
-    primary: { main: '#443e51' },
-    secondary: { main: '#4c4c4c' },
-    background: { default: '#f5f5f5', paper: '#fff' },
-    success: { main: '#706cff' },
-    text: {
-      primary: '#443e51',
-      secondary: '#4c4c4c'
-    }
-  },
-});
-
 interface ThemeModeProviderProps {
   children: ReactNode;
 }
 
 // Provider component
 export function ThemeModeProvider({ children }: ThemeModeProviderProps) {
-  // Detect system preference or use stored preference
-  const getInitialMode = () => {
-    const stored = localStorage.getItem('darkMode');
-    if (stored !== null) return JSON.parse(stored);
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  };
-
-  const [darkMode, setDarkMode] = useState<boolean>(getInitialMode);
-
-  // Persist darkMode to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-  }, [darkMode]);
-
-  const toggleDarkMode = () => setDarkMode((prev) => !prev);
-
-  // Memoize theme object
-  const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
-
   return (
-    <ThemeModeContext.Provider value={{ darkMode, toggleDarkMode }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </ThemeModeContext.Provider>
+    <ThemeProvider theme={lightTheme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
   );
 }
 

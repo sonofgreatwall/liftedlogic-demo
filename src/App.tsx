@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Step1,
   Step2,
@@ -17,12 +18,38 @@ import {
   Step16,
   Step17,
   Step18,
-  Step19
+  Step19,
+  Final,
+  SaveProgress,
+  SaveSuccess
 } from "./pages"
 import { useMain } from './Context';
 
 export default function App() {
-  const { step } = useMain();
+  const { step, setStep, setPrevSteps, updateData } = useMain();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const gfToken = queryParams.get('gf_token');
+    if (gfToken) {
+      fetch(`http://localhost:5000/get_progress/${gfToken}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          updateData(data)
+          setStep(data.prevSteps[data.prevSteps.length - 1])
+          setPrevSteps(data.prevSteps.slice(0, -1) || [])
+          console.log('Server response:', data);
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+        });
+    }
+  }, [])
 
   return (
     <>
@@ -45,6 +72,9 @@ export default function App() {
       {step === 17 && <Step17 />}
       {step === 18 && <Step18 />}
       {step === 19 && <Step19 />}
+      {step === 100 && <Final />}
+      {step === 110 && <SaveProgress />}
+      {step === 111 && <SaveSuccess />}
     </>
   );
 }

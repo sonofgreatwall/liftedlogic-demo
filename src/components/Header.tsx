@@ -47,7 +47,7 @@ export default function Header() {
             transform: 'translate(-50%, -50%)',
           }}
         />
-        {step > 2 && (
+        {(step > 2 && step <= 19) && (
           <BackButton
             variant="outlined"
             startIcon={<WestSharpIcon />}

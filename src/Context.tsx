@@ -8,7 +8,9 @@ interface MainContextType {
   goBack: () => void;
   goToStep: (val: number) => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  setPrevSteps: React.Dispatch<React.SetStateAction<Array<number>>>;
   updateData: (val: any) => void;
+  prevSteps: Array<number>;
 }
 
 // Create context with default empty values
@@ -48,7 +50,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
   }
 
   return (
-    <MainContext.Provider value={{ step, goBack, setStep, goToStep, updateData, data }}>
+    <MainContext.Provider value={{ step, goBack, setStep, goToStep, updateData, setPrevSteps, prevSteps, data }}>
       {children}
     </MainContext.Provider>
   );

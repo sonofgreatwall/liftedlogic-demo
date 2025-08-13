@@ -30,22 +30,27 @@ const SaveButton = styled(Button)(({ theme }) => ({
 }))
 
 export default function Footer() {
-  const { step } = useMain();
+  const { step, updateData, goToStep } = useMain();
 
-  if (step > 1) {
+  const goToSaveProgress = () => {
+    updateData({ currentStep: step })
+    goToStep(110)
+  }
+
+  if (step > 1 && step <= 19) {
     return (
-    <StyledFooterWrap position="fixed">
-      <StyledContentWrap>
-        <Stack
-          sx={{ flexGrow: 1, height: 46 }}
-          justifyContent={'space-between'}
-          px={2}
-        >
-          <ProgressBar value={100 * (step - 1) / 18 } />
-          <SaveButton disableRipple>Save My Progress</SaveButton>
-        </Stack>
-      </StyledContentWrap>
-    </StyledFooterWrap>
+      <StyledFooterWrap position="fixed">
+        <StyledContentWrap>
+          <Stack
+            sx={{ flexGrow: 1, height: 46 }}
+            justifyContent={'space-between'}
+            px={2}
+          >
+            <ProgressBar value={100 * (step - 1) / 18} />
+            <SaveButton onClick={goToSaveProgress} disableRipple>Save My Progress</SaveButton>
+          </Stack>
+        </StyledContentWrap>
+      </StyledFooterWrap>
     );
   } else {
     return <></>
