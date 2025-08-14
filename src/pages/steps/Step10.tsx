@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Stack, Box, Typography, keyframes } from '@mui/material';
-import { PageLayout } from '../layouts';
+import { Stack, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useMain } from '../Context';
-import { DataButton } from '../components';
+import { useMain } from '../../Context';
+import { DataButton } from '../../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
-  maxWidth: 700
+  maxWidth: 750
 });
 
 const FormWrap = styled(Stack)(({ theme }) => ({
@@ -36,61 +35,44 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-// Pure fade-in animation
-const fadeIn = keyframes`
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-`;
-
-export default function Step4() {
+export default function Step10() {
   const { goToStep, updateData, data } = useMain();
-  const [selected, setSelected] = useState<number>(data.step4);
+  const [selected, setSelected] = useState<number>(data.step10);
 
   const onClick = (val: number) => {
+    if(val === selected) return
     setSelected(val)
-    updateData({ step4: val })
-    goToStep(5)
+    updateData({ step10: val })
+    goToStep(11)
   }
 
   return (
-    <PageLayout>
-      <Stack
-        direction={'column'}
-        alignItems={'center'}
-        pt={12}
-        mx={'auto'}
-        sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
-      >
+      <>
         <TextWrap>
           <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            How many pages will you need?
+            Do you need a Content Management System (CMS)?
           </Typography>
           <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            e.g., how it works, contact us, team, about, press, terms, FAQ, careers
+            A CMS will let you update content on your site without writing code (e.g., writing a blog or editing a page).
           </Typography>
         </TextWrap>
         <FormWrap>
           <DataButton selected={selected === 1} onClick={() => onClick(1)}>
-            <Box component='img' src='./icons/pages-indigo.webp' mr={1.5} />
-            1-3
+            <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
+            Yes
           </DataButton>
           <DataButton selected={selected === 2} onClick={() => onClick(2)}>
-            <Box component='img' src='./icons/pages-pink.webp' mr={1.5} />
-            4-9
+            <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
+            No
           </DataButton>
           <DataButton selected={selected === 3} onClick={() => onClick(3)}>
-            <Box component='img' src='./icons/pages-yellow.webp' mr={1.5} />
-            10+
-          </DataButton>
-          <DataButton selected={selected === 4} onClick={() => onClick(4)}>
-            <Box component='img' src='./icons/not-sure-green.webp' mr={1.5} />
+            <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
             Not Sure
           </DataButton>
         </FormWrap>
-      </Stack>
-    </PageLayout>
+      </>
   );
 }

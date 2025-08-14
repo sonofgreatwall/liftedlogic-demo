@@ -1,24 +1,7 @@
 import { useEffect } from "react";
 import {
-  Step1,
-  Step2,
-  Step3,
-  Step4,
-  Step5,
-  Step6,
-  Step7,
-  Step8,
-  Step9,
-  Step10,
-  Step11,
-  Step12,
-  Step13,
-  Step14,
-  Step15,
-  Step16,
-  Step17,
-  Step18,
-  Step19,
+  Landing,
+  StepPage,
   Final,
   SaveProgress,
   SaveSuccess
@@ -26,7 +9,7 @@ import {
 import { useMain } from './Context';
 
 export default function App() {
-  const { step, setStep, setPrevSteps, updateData } = useMain();
+  const { page, setPrevSteps, updateData } = useMain();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -40,8 +23,7 @@ export default function App() {
           return response.json();
         })
         .then(data => {
-          setStep(data.prevSteps[data.prevSteps.length - 1])
-          setPrevSteps(data.prevSteps.slice(0, -1) || [])
+          setPrevSteps(data.prevSteps || [])
           delete data.prevSteps;
           updateData({ ...data, token: gfToken })
           console.log('Server response:', data);
@@ -54,28 +36,11 @@ export default function App() {
 
   return (
     <>
-      {step === 1 && <Step1 />}
-      {step === 2 && <Step2 />}
-      {step === 3 && <Step3 />}
-      {step === 4 && <Step4 />}
-      {step === 5 && <Step5 />}
-      {step === 6 && <Step6 />}
-      {step === 7 && <Step7 />}
-      {step === 8 && <Step8 />}
-      {step === 9 && <Step9 />}
-      {step === 10 && <Step10 />}
-      {step === 11 && <Step11 />}
-      {step === 12 && <Step12 />}
-      {step === 13 && <Step13 />}
-      {step === 14 && <Step14 />}
-      {step === 15 && <Step15 />}
-      {step === 16 && <Step16 />}
-      {step === 17 && <Step17 />}
-      {step === 18 && <Step18 />}
-      {step === 19 && <Step19 />}
-      {step === 100 && <Final />}
-      {step === 110 && <SaveProgress />}
-      {step === 111 && <SaveSuccess />}
+      {page === 1 && <Landing />}
+      {page === 2 && <StepPage />}
+      {page === 3 && <SaveProgress />}
+      {page === 4 && <SaveSuccess />}
+      {page === 5 && <Final />}
     </>
   );
 }

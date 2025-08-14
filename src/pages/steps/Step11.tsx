@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Stack, Box, Typography, keyframes } from '@mui/material';
-import { PageLayout } from '../layouts';
+import { Stack, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useMain } from '../Context';
-import { DataButton } from '../components';
+import { useMain } from '../../Context';
+import { DataButton } from '../../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
-  maxWidth: 750
+  maxWidth: 700
 });
 
 const FormWrap = styled(Stack)(({ theme }) => ({
@@ -36,57 +35,44 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-// Pure fade-in animation
-const fadeIn = keyframes`
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-`;
-
-export default function Step9() {
+export default function Step11() {
   const { goToStep, updateData, data } = useMain();
-  const [selected, setSelected] = useState<number>(data.step9);
+  const [selected, setSelected] = useState<number>(data.step11);
 
   const onClick = (val: number) => {
+    if(val === selected) return
     setSelected(val)
-    updateData({ step9: val })
-    goToStep(10)
+    updateData({ step11: val })
+    goToStep(12)
   }
 
   return (
-    <PageLayout>
-      <Stack
-        direction={'column'}
-        alignItems={'center'}
-        pt={12}
-        mx={'auto'}
-        sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
-      >
+      <>
         <TextWrap>
           <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            How important is Search Engine Optimization (SEO)?
+            Do you need professional web copywriting?
           </Typography>
           <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            Building a site with a heavy focus on each engine optimization is best executed the earlier it is planned. SEO should never compromise a user’s experience.
+            The saying “Content is King” couldn’t be more accurate. This doesn’t mean simply typing a bunch of keywords into a page. It’s showing the user you are an expert in your field.
           </Typography>
         </TextWrap>
         <FormWrap>
           <DataButton selected={selected === 1} onClick={() => onClick(1)}>
             <Box component='img' src='./icons/Yes-svg.webp' mr={1.5} />
-            Very Important
+            Yes
           </DataButton>
           <DataButton selected={selected === 2} onClick={() => onClick(2)}>
             <Box component='img' src='./icons/No-svg.webp' mr={1.5} />
-            Not Important
+            No
           </DataButton>
           <DataButton selected={selected === 3} onClick={() => onClick(3)}>
             <Box component='img' src='./icons/Not-sure-svg.webp' mr={1.5} />
             Not Sure
           </DataButton>
         </FormWrap>
-      </Stack>
-    </PageLayout>
+      </>
   );
 }

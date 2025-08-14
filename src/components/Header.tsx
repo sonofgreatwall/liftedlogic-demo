@@ -32,7 +32,7 @@ const BackButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Header() {
-  const { step, goBack } = useMain();
+  const { step, page, goBack } = useMain();
 
   return (
     <StyledHeaderWrap position="fixed">
@@ -47,7 +47,7 @@ export default function Header() {
             transform: 'translate(-50%, -50%)',
           }}
         />
-        {(step > 2 && step <= 19) && (
+        {(page === 2 && step > 2 && step <= 19) && (
           <BackButton
             variant="outlined"
             startIcon={<WestSharpIcon />}

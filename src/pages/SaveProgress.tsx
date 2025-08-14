@@ -37,7 +37,7 @@ function generateToken() {
 }
 
 export default function SaveProgress() {
-  const { goToStep, data, updateData, prevSteps } = useMain();
+  const { setPage, data, updateData, step, prevSteps } = useMain();
   const [formData, setFormData] = useState({
     email: '',
   });
@@ -92,7 +92,7 @@ export default function SaveProgress() {
           ...data,
           saveEmail: formData.email,
           token: token,
-          prevSteps
+          prevSteps: [...prevSteps, step]
         })
       })
         .then(response => {
@@ -102,7 +102,7 @@ export default function SaveProgress() {
           return response.json();
         })
         .then(data => {
-          goToStep(111)
+          setPage(4)
           console.log('Server response:', data);
         })
         .catch(error => {
@@ -127,7 +127,7 @@ export default function SaveProgress() {
           <Typography component="p" fontSize={16} lineHeight={1.5} color="primary" mt={2.5}>
             Please use the following link to return and complete this form from any computer.
           </Typography>
-          <Link href="#" mt={2.5} fontWeight={600} color='info'>https://liftedlogic.com/cost-calculator/?gf_token={token}</Link>
+          <Link href="#" mt={2.5} fontWeight={600} color='info'>http://localhost:3000/?gf_token={token}</Link>
           <Typography component="p" fontSize={16} lineHeight={1.5} color="primary" my={2.5}>
             Note: This link will expire after 30 days.<br />
             Enter your email address if you would like to receive the link via email.

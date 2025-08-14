@@ -30,14 +30,14 @@ const SaveButton = styled(Button)(({ theme }) => ({
 }))
 
 export default function Footer() {
-  const { step, updateData, goToStep } = useMain();
+  const { step, page, updateData, setPage } = useMain();
 
   const goToSaveProgress = () => {
     updateData({ currentStep: step })
-    goToStep(110)
+    setPage(3)
   }
 
-  if (step > 1 && step <= 19) {
+  if (page === 2 || page === 3) {
     return (
       <StyledFooterWrap position="fixed">
         <StyledContentWrap>

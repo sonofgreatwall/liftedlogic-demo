@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Stack, Box, Typography, keyframes } from '@mui/material';
-import { PageLayout } from '../layouts';
+import { Stack, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useMain } from '../Context';
-import { DataButton } from '../components';
+import { useMain } from '../../Context';
+import { DataButton } from '../../components';
 
 const TextWrap = styled(Stack)({
   alignItems: 'center',
-  maxWidth: 700
+  maxWidth: 750
 });
 
 const FormWrap = styled(Stack)(({ theme }) => ({
@@ -36,40 +35,28 @@ const FormWrap = styled(Stack)(({ theme }) => ({
   },
 }));
 
-// Pure fade-in animation
-const fadeIn = keyframes`
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-`;
-
-export default function Step11() {
+export default function Step8() {
   const { goToStep, updateData, data } = useMain();
-  const [selected, setSelected] = useState<number>(data.step11);
+  const [selected, setSelected] = useState<number>(data.step8);
 
   const onClick = (val: number) => {
+    if(val === selected) return
     setSelected(val)
-    updateData({ step11: val })
-    goToStep(12)
+    updateData({ step8: val })
+    goToStep(9)
   }
 
   return (
-    <PageLayout>
-      <Stack
-        direction={'column'}
-        alignItems={'center'}
-        pt={12}
-        mx={'auto'}
-        sx={{ maxWidth: 966, animation: `${fadeIn} 1s ease-out` }}
-      >
+      <>
         <TextWrap>
           <Typography component="p" fontSize={16} fontWeight={700} color="secondary">
             "*" indicates required fields
           </Typography>
           <Typography variant="h2" fontSize={{ sm: 40, xs: 32 }} align='center' fontWeight={700} lineHeight={'48px'} color="info">
-            Do you need professional web copywriting?
+            Do you have existing photography or videography to use for your new website?
           </Typography>
           <Typography component="p" fontSize={18} lineHeight={1.5} fontWeight={700} align='center' color="primary" mt={4}>
-            The saying “Content is King” couldn’t be more accurate. This doesn’t mean simply typing a bunch of keywords into a page. It’s showing the user you are an expert in your field.
+            A good website is an immersive experience. The best way to explain to your clients why they should choose your company is by showing them.
           </Typography>
         </TextWrap>
         <FormWrap>
@@ -86,7 +73,6 @@ export default function Step11() {
             Not Sure
           </DataButton>
         </FormWrap>
-      </Stack>
-    </PageLayout>
+      </>
   );
 }

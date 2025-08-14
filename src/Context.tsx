@@ -5,8 +5,10 @@ import type { ReactNode } from "react";
 interface MainContextType {
   data: any;
   step: number;
+  page: number;
   goBack: () => void;
   goToStep: (val: number) => void;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setPrevSteps: React.Dispatch<React.SetStateAction<Array<number>>>;
   updateData: (val: any) => void;
@@ -23,7 +25,8 @@ interface MainProviderProps {
 
 // Provider component to wrap your app or subtree
 export const MainProvider = ({ children }: MainProviderProps) => {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(2);
+  const [page, setPage] = useState<number>(1);
   const [data, setData] = useState({});
   const [prevSteps, setPrevSteps] = useState<number[]>([]);
 
@@ -50,7 +53,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
   }
 
   return (
-    <MainContext.Provider value={{ step, goBack, setStep, goToStep, updateData, setPrevSteps, prevSteps, data }}>
+    <MainContext.Provider value={{ step, page, setPage, goBack, setStep, goToStep, updateData, setPrevSteps, prevSteps, data }}>
       {children}
     </MainContext.Provider>
   );
